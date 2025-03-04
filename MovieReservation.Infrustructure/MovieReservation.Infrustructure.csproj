@@ -24,9 +24,4 @@
     <ProjectReference Include="..\MovieReservation.Data\MovieReservation.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstracts\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
 </Project>

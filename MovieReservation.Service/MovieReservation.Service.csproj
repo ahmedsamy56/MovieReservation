@@ -11,9 +11,4 @@
     <ProjectReference Include="..\MovieReservation.Infrustructure\MovieReservation.Infrustructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstracts\" />
-    <Folder Include="Implementations\" />
-  </ItemGroup>
-
 </Project>
