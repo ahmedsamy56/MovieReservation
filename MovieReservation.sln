@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReservation.Api", "MovieReservation.Api\MovieReservation.Api.csproj", "{B1678D4E-DC8E-426B-809F-A1DBD85F6C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReservation.Data", "MovieReservation.Data\MovieReservation.Data.csproj", "{FC60776A-7C4A-4663-8C76-827D34C7CE37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReservation.Infrustructure", "MovieReservation.Infrustructure\MovieReservation.Infrustructure.csproj", "{5C00AD6C-0810-4218-B210-6EF977D46334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReservation.Core", "MovieReservation.Core\MovieReservation.Core.csproj", "{81855787-EE83-44A6-A347-D69C1746100F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieReservation.Service", "MovieReservation.Service\MovieReservation.Service.csproj", "{C05A0C89-1A9D-4C4B-8952-FCACDAF1E576}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1678D4E-DC8E-426B-809F-A1DBD85F6C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1678D4E-DC8E-426B-809F-A1DBD85F6C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1678D4E-DC8E-426B-809F-A1DBD85F6C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1678D4E-DC8E-426B-809F-A1DBD85F6C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC60776A-7C4A-4663-8C76-827D34C7CE37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC60776A-7C4A-4663-8C76-827D34C7CE37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC60776A-7C4A-4663-8C76-827D34C7CE37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC60776A-7C4A-4663-8C76-827D34C7CE37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C00AD6C-0810-4218-B210-6EF977D46334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C00AD6C-0810-4218-B210-6EF977D46334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C00AD6C-0810-4218-B210-6EF977D46334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C00AD6C-0810-4218-B210-6EF977D46334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81855787-EE83-44A6-A347-D69C1746100F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81855787-EE83-44A6-A347-D69C1746100F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81855787-EE83-44A6-A347-D69C1746100F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81855787-EE83-44A6-A347-D69C1746100F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C05A0C89-1A9D-4C4B-8952-FCACDAF1E576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C05A0C89-1A9D-4C4B-8952-FCACDAF1E576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C05A0C89-1A9D-4C4B-8952-FCACDAF1E576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C05A0C89-1A9D-4C4B-8952-FCACDAF1E576}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
