@@ -9,6 +9,8 @@ namespace MovieReservation.Service
         public static IServiceCollection AddServiceDependencies(this IServiceCollection services)
         {
             services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<IMovieService, MovieService>();
+            services.AddTransient<IFileService, FileService>();
 
             return services;
         }

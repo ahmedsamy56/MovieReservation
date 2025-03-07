@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using MovieReservation.Core;
 using MovieReservation.Core.MiddleWare;
@@ -21,6 +22,11 @@ namespace MovieReservation.Api
                 .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
+            builder.Services.Configure<FormOptions>(options =>
+            {
+                options.ValueCountLimit = int.MaxValue; // Allow more form values
+                options.MultipartBodyLengthLimit = 50 * 1024 * 1024; // 50MB limit (adjust as needed)
+            });
 
 
             // Dependency injections
@@ -47,7 +53,7 @@ namespace MovieReservation.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(op => op.SwaggerEndpoint("/openapi/v1.json", "Swagger"));
             }
-
+            app.UseStaticFiles();
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHttpsRedirection();
 

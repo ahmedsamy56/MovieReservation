@@ -8,11 +8,11 @@ namespace MovieReservation.Core.Mapping.Categories
         public void GetCategoryByIdMapping()
         {
             CreateMap<Category, GetCategoryByIdResponse>()
-                .ForMember(dest => dest.Movies, opt => opt.MapFrom(src => src.Movies));
+                 .ForMember(dest => dest.Movies, opt => opt.MapFrom(src => src.Movies ?? new List<Movie>()));
 
             CreateMap<Movie, MovieList>()
-                .ForMember(dest => dest.PosterUrl, opt => opt.MapFrom(srs => srs.Poster))
-                .ForMember(dest => dest.releaseDate, opt => opt.MapFrom(src => src.releaseDate.ToString("yyyy-MM-dd")));
+                .ForMember(dest => dest.PosterUrl, opt => opt.MapFrom(src => src.Poster))
+                .ForMember(dest => dest.releaseDate, opt => opt.MapFrom(src => src.releaseDate));
 
         }
     }
