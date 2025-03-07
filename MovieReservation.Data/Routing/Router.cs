@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieReservation.Data.Routing
+﻿namespace MovieReservation.Data.Routing
 {
     public static class Router
     {
@@ -23,5 +17,15 @@ namespace MovieReservation.Data.Routing
             public const string Delete = Prefix + "/{id}";
         }
 
+        public static class MovieRouting
+        {
+            public const string Prefix = Rule + "Movie";
+            public const string List = Prefix + "/List";
+            public const string GetByID = Prefix + SignleRoute;
+            public const string Create = Prefix + "/Create";
+            public const string Edit = Prefix + "/Edit";
+            public const string Delete = Prefix + "/{id}";
+            public const string Paginated = Prefix + "/Paginated";
+        }
     }
 }
