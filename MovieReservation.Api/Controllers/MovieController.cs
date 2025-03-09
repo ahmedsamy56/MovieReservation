@@ -21,7 +21,7 @@ namespace MovieReservation.Api.Controllers
             var response = await Mediator.Send(new GetMovieByIdQuery(id));
             return NewResult(response);
         }
-        [HttpPut(Router.MovieRouting.Paginated)]
+        [HttpGet(Router.MovieRouting.Paginated)]
         public async Task<IActionResult> Paginated([FromQuery] GetMoviesPaginatedListQuery query)
         {
             var response = await Mediator.Send(query);
