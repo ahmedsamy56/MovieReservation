@@ -27,5 +27,16 @@
             public const string Delete = Prefix + "/{id}";
             public const string Paginated = Prefix + "/Paginated";
         }
+
+        public static class TheaterRouting
+        {
+            public const string Prefix = Rule + "Theater";
+            public const string List = Prefix + "/List";
+            public const string GetByID = Prefix + SignleRoute;
+            public const string Create = Prefix + "/Create";
+            public const string Edit = Prefix + "/Edit";
+            public const string Delete = Prefix + "/{id}";
+            public const string Paginated = Prefix + "/Paginated";
+        }
     }
 }
