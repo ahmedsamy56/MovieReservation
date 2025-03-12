@@ -32,9 +32,8 @@ namespace MovieReservation.Api
             // Dependency injections
             builder.Services.AddInfrastructureDependencies()
                             .AddServiceDependencies()
-                            .AddCoreDependencies();
-
-
+                            .AddCoreDependencies()
+                            .AddServiceRegisteration(builder.Configuration);
             // Add services to the container.
 
             builder.Services.AddControllers();
