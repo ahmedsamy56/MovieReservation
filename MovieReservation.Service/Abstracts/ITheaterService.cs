@@ -12,5 +12,7 @@ namespace MovieReservation.Service.Abstracts
         public IQueryable<Theater> FilterTheaterPaginatedQuerable(TheaterOrderingEnum orderingEnum, string search);
         public Task<bool> HasShowtimesAsync(int theaterId);
         public Task<string> DeleteTheaterAsync(Theater theater);
+        public Task<bool> TheaterExistsAsync(int id);
+        public Task<bool> IsTheaterAvailableAsync(int theaterId, DateTime startTime, int movieId);
     }
 }
