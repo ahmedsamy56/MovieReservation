@@ -38,5 +38,16 @@
             public const string Delete = Prefix + "/{id}";
             public const string Paginated = Prefix + "/Paginated";
         }
+
+        public static class ShowtimeRouting
+        {
+            public const string Prefix = Rule + "Showtime";
+            public const string List = Prefix + "/List";
+            public const string GetByID = Prefix + SignleRoute;
+            public const string Create = Prefix + "/Create";
+            public const string Edit = Prefix + "/Edit";
+            public const string Delete = Prefix + "/{id}";
+            public const string Paginated = Prefix + "/Paginated";
+        }
     }
 }

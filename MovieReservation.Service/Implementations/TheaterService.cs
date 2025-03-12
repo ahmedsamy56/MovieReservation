@@ -11,13 +11,15 @@ namespace MovieReservation.Service.Implementations
         #region Fields
         private readonly ITheaterRepository _theaterRepository;
         private readonly IShowtimeRepository _showtimeRepository;
+        private readonly IMovieRepository _movieRepository;
         #endregion
 
         #region Constructors
-        public TheaterService(ITheaterRepository theaterRepository, IShowtimeRepository showtimeRepository)
+        public TheaterService(ITheaterRepository theaterRepository, IShowtimeRepository showtimeRepository, IMovieRepository movieRepository)
         {
             _theaterRepository = theaterRepository;
             _showtimeRepository = showtimeRepository;
+            _movieRepository = movieRepository;
         }
 
         #endregion
@@ -85,7 +87,27 @@ namespace MovieReservation.Service.Implementations
             return "Success";
         }
 
+        public async Task<bool> TheaterExistsAsync(int id)
+        {
+            var theater = await _theaterRepository.GetByIdAsync(id);
+            return theater != null;
+        }
 
+        public async Task<bool> IsTheaterAvailableAsync(int theaterId, DateTime startTime, int movieId)
+        {
+            var movie = await _movieRepository.GetByIdAsync(movieId);
+            if (movie == null) return false;
+
+            int durationInMinutes = movie.DurationInMinutes;
+            DateTime endTime = startTime.AddMinutes(durationInMinutes);
+
+            bool isAvailable = !await _showtimeRepository.GetTableNoTracking()
+                .AnyAsync(s => s.TheaterId == theaterId &&
+                              ((s.StartTime >= startTime && s.StartTime < endTime) ||
+                               (s.StartTime.AddMinutes(s.Movie.DurationInMinutes) > startTime && s.StartTime < endTime)));
+
+            return isAvailable;
+        }
 
         #endregion
     }
