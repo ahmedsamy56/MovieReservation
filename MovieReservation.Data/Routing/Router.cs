@@ -50,7 +50,7 @@
             public const string Paginated = Prefix + "/Paginated";
         }
 
-        public static class AppUser
+        public static class AppUserRouting
         {
             public const string Prefix = Rule + "AppUser";
             public const string List = Prefix + "/List";

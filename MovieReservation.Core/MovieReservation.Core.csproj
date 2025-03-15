@@ -21,11 +21,4 @@
     <ProjectReference Include="..\MovieReservation.Service\MovieReservation.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\AppUsers\Queries\Handlers\" />
-    <Folder Include="Features\AppUsers\Queries\Models\" />
-    <Folder Include="Features\AppUsers\Queries\Results\" />
-    <Folder Include="Mapping\AppUsers\QueryMapping\" />
-  </ItemGroup>
-
 </Project>

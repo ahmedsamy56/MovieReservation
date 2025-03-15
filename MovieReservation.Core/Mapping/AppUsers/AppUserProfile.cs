@@ -7,6 +7,10 @@ namespace MovieReservation.Core.Mapping.AppUsers
         public AppUserProfile()
         {
             AddAppUserMapping();
+
+
+            GetAppUserPaginationMapping();
+            GetAppUserByIdMapping();
         }
     }
 }
