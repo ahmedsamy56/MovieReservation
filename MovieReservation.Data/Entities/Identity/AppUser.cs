@@ -9,5 +9,6 @@ namespace MovieReservation.Data.Entities.Identity
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public ICollection<Reservation>? Reservations { get; set; }
+        public ICollection<UserRefreshToken>? UserRefreshTokens { get; set; }
     }
 }

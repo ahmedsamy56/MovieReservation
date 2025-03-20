@@ -9,7 +9,7 @@ namespace MovieReservation.Infrustructure.Context
     public class AppDbContext : IdentityDbContext<AppUser, Role, int, IdentityUserClaim<int>, IdentityUserRole<int>, IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>
     {
 
-        
+
         public AppDbContext()
         {
 
@@ -19,11 +19,12 @@ namespace MovieReservation.Infrustructure.Context
         }
 
         public DbSet<AppUser> appUsers { get; set; }
-        public DbSet<Category> categories { get; set; }  
+        public DbSet<Category> categories { get; set; }
         public DbSet<Movie> movies { get; set; }
-        public DbSet<Reservation> reservations { get; set; }    
+        public DbSet<Reservation> reservations { get; set; }
         public DbSet<Showtime> showtimes { get; set; }
         public DbSet<Theater> theaters { get; set; }
+        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
 
     }
 }

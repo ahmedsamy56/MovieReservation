@@ -13,6 +13,9 @@ namespace MovieReservation.Service
             services.AddTransient<IFileService, FileService>();
             services.AddTransient<ITheaterService, TheaterService>();
             services.AddTransient<IShowtimeService, ShowtimeService>();
+            services.AddTransient<IAppUserService, AppUserService>();
+            services.AddTransient<IAuthenticationService, AuthenticationService>();
+
 
             return services;
         }
