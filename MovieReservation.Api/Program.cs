@@ -29,11 +29,13 @@ namespace MovieReservation.Api
             });
 
 
+
             // Dependency injections
             builder.Services.AddInfrastructureDependencies()
                             .AddServiceDependencies()
                             .AddCoreDependencies()
                             .AddServiceRegisteration(builder.Configuration);
+
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -42,6 +44,7 @@ namespace MovieReservation.Api
             // Add Swagger services
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
 
             var app = builder.Build();
 
@@ -56,6 +59,7 @@ namespace MovieReservation.Api
             app.UseMiddleware<ErrorHandlerMiddleware>();
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

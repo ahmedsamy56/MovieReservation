@@ -60,6 +60,14 @@
             public const string Delete = Prefix + "/{id}";
             public const string Paginated = Prefix + "/Paginated";
         }
+        public static class AuthenticationRouting
+        {
+            public const string Prefix = Rule + " Authentication";
+            public const string SignIn = Prefix + "/SignIn";
+            public const string RefreshToken = Prefix + "/Refresh-Token";
+            public const string ValidateToken = Prefix + "/Validate-Token";
+        }
+
 
     }
 }
