@@ -6,7 +6,6 @@ using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
 {
-
     public class CategoryController : AppControllerBase
     {
 

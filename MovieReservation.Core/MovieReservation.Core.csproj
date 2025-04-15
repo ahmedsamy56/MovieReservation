@@ -21,4 +21,9 @@
     <ProjectReference Include="..\MovieReservation.Service\MovieReservation.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Authorization\Commands\Validatiors\" />
+    <Folder Include="Mapping\Authorization\CommandMapping\" />
+  </ItemGroup>
+
 </Project>
