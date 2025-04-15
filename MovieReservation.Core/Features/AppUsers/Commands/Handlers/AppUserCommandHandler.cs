@@ -36,6 +36,8 @@ namespace MovieReservation.Core.Features.AppUsers.Commands.Handlers
 
             if (!result.Succeeded) return BadRequest<string>($"Faild To Add User : {result.Errors.FirstOrDefault().ToString()}");
 
+            await _userManager.AddToRoleAsync(UserMapping, "User");
+
             return Created("");
         }
 

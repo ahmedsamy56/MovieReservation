@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,7 +8,6 @@ using Microsoft.OpenApi.Models;
 using MovieReservation.Data.Entities.Identity;
 using MovieReservation.Data.Helpers;
 using MovieReservation.Infrustructure.Context;
-using System.Text;
 
 namespace MovieReservation.Infrustructure
 {
@@ -66,12 +66,12 @@ namespace MovieReservation.Infrustructure
                 };
             });
 
-            //Swagger Gn
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MovieReservation", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger", Version = "v1" });
                 c.EnableAnnotations();
 
+                // JWT Security Definition
                 c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
@@ -81,9 +81,10 @@ namespace MovieReservation.Infrustructure
                     Scheme = JwtBearerDefaults.AuthenticationScheme
                 });
 
+                // Security Requirement
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-            {
+    {
+        {
             new OpenApiSecurityScheme
             {
                 Reference = new OpenApiReference
@@ -93,9 +94,10 @@ namespace MovieReservation.Infrustructure
                 }
             },
             Array.Empty<string>()
-            }
-           });
+        }
+    });
             });
+
 
 
             return services;

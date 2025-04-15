@@ -69,5 +69,15 @@
         }
 
 
+        public static class AuthorizationRouting
+        {
+            public const string Prefix = Rule + "Authorization";
+            public const string AddAdminRole = Prefix + "/Add-User-To-Admin-Role";
+            public const string RemoveAdminRole = Prefix + "/Remove-User-From-Admin-Role";
+            public const string AllAdmins = Prefix + "/All-Admins";
+
+        }
+
+
     }
 }

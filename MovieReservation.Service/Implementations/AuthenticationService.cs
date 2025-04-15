@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using MovieReservation.Data.Entities.Identity;
 using MovieReservation.Data.Helpers;
 using MovieReservation.Infrustructure.Abstracts;
 using MovieReservation.Service.Abstracts;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace MovieReservation.Service.Implementations
 {
@@ -16,13 +17,15 @@ namespace MovieReservation.Service.Implementations
         #region Fields
         private readonly JwtSettings _jwtSettings;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
+        private readonly UserManager<AppUser> _userManager;
         #endregion
 
         #region Constructors
-        public AuthenticationService(JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository)
+        public AuthenticationService(JwtSettings jwtSettings, IRefreshTokenRepository refreshTokenRepository, UserManager<AppUser> userManager)
         {
             _jwtSettings = jwtSettings;
             _refreshTokenRepository = refreshTokenRepository;
+            _userManager = userManager;
         }
         #endregion
 
@@ -31,7 +34,7 @@ namespace MovieReservation.Service.Implementations
 
         public async Task<JwtResult> GetJWTToken(AppUser user)
         {
-            var (jwtToken, accessToken) = GenerateJWTToken(user);
+            var (jwtToken, accessToken) = await GenerateJWTToken(user);
             var refreshToken = GetRefreshToken(user.Email);
             var userRefreshToken = new UserRefreshToken
             {
@@ -52,9 +55,10 @@ namespace MovieReservation.Service.Implementations
             return response;
         }
 
-        private (JwtSecurityToken, string) GenerateJWTToken(AppUser user)
+        private async Task<(JwtSecurityToken, string)> GenerateJWTToken(AppUser user)
         {
-            var claims = GetClaims(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            var claims = GetClaims(user, roles.ToList());
             var jwtToken = new JwtSecurityToken(
                 _jwtSettings.Issuer,
                 _jwtSettings.Audience,
@@ -82,8 +86,9 @@ namespace MovieReservation.Service.Implementations
             randomNumberGenerate.GetBytes(randomNumber);
             return Convert.ToBase64String(randomNumber);
         }
-        public List<Claim> GetClaims(AppUser user)
+        public List<Claim> GetClaims(AppUser user, List<string> roles)
         {
+
             var claims = new List<Claim>()
             {
                 new Claim(nameof(UserClaimModel.Email),user.Email),
@@ -91,12 +96,17 @@ namespace MovieReservation.Service.Implementations
                 new Claim(nameof(UserClaimModel.Id),user.Id.ToString()),
 
             };
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
             return claims;
         }
 
         public async Task<JwtResult> GetRefreshToken(AppUser user, JwtSecurityToken jwtToken, DateTime? expiryDate, string refreshToken)
         {
-            var (jwtSecurityToken, newToken) = GenerateJWTToken(user);
+            var (jwtSecurityToken, newToken) = await GenerateJWTToken(user);
             var response = new JwtResult();
             response.AccessToken = newToken;
             var refreshTokenResult = new RefreshToken();
