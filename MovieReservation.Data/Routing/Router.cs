@@ -63,10 +63,11 @@
         }
         public static class AuthenticationRouting
         {
-            public const string Prefix = Rule + " Authentication";
+            public const string Prefix = Rule + "Authentication";
             public const string SignIn = Prefix + "/SignIn";
             public const string RefreshToken = Prefix + "/Refresh-Token";
             public const string ValidateToken = Prefix + "/Validate-Token";
+            public const string ConfirmEmail = Prefix + "/ConfirmEmail";
         }
 
 
@@ -77,6 +78,12 @@
             public const string RemoveAdminRole = Prefix + "/Remove-User-From-Admin-Role";
             public const string AllAdmins = Prefix + "/All-Admins";
 
+        }
+
+        public static class EmailsRoute
+        {
+            public const string Prefix = Rule + "EmailsRoute";
+            public const string SendEmail = Prefix + "/SendEmail";
         }
 
 
