@@ -1,13 +1,62 @@
-﻿using MovieReservation.Data.Entities.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using MovieReservation.Data.Entities.Identity;
+using MovieReservation.Infrustructure.Context;
 using MovieReservation.Service.Abstracts;
 
 namespace MovieReservation.Service.Implementations
 {
     public class AppUserService : IAppUserService
     {
-        public Task<string> AddUserAsync(AppUser user, string password)
+
+        #region Fields
+        private readonly UserManager<AppUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IEmailsService _emailsService;
+        private readonly AppDbContext _applicationDBContext;
+        #endregion
+        #region Constructors
+        public AppUserService(UserManager<AppUser> userManager,
+                                      IHttpContextAccessor httpContextAccessor,
+                                      IEmailsService emailsService,
+                                      AppDbContext applicationDBContext)
         {
-            throw new NotImplementedException();
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+            _emailsService = emailsService;
+            _applicationDBContext = applicationDBContext;
+        }
+        #endregion
+        public async Task<string> AddUserAsync(AppUser user, string password)
+        {
+            var trans = await _applicationDBContext.Database.BeginTransactionAsync();
+            try
+            {
+                var existUser = await _userManager.FindByEmailAsync(user.Email);
+                if (existUser != null) return "EmailIsExist";
+                //Create
+                var createResult = await _userManager.CreateAsync(user, password);
+                if (!createResult.Succeeded)
+                    return string.Join(",", createResult.Errors.Select(x => x.Description).ToList());
+
+                await _userManager.AddToRoleAsync(user, "User");
+
+                //Send Confirm  
+                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                var resquestAccessor = _httpContextAccessor.HttpContext.Request;
+                var returnUrl = resquestAccessor.Scheme + "://" + resquestAccessor.Host + $"/Api/V1/Authentication/ConfirmEmail?userId={user.Id}&code={code}";
+                var message = $"To Confirm Email Click Link: <a href='{returnUrl}'>Link Of Confirmation </a>";
+
+                await _emailsService.SendEmail(user.Email, message, "ConFirm Email");
+
+                await trans.CommitAsync();
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                await trans.RollbackAsync();
+                return "Failed";
+            }
         }
     }
 }

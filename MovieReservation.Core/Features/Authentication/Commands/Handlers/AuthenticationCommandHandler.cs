@@ -38,6 +38,9 @@ namespace MovieReservation.Core.Features.Authentication.Commands.Handlers
 
             var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
+            if (!user.EmailConfirmed)
+                return BadRequest<JwtResult>("Email not Confirmed");
+
             if (!signInResult.Succeeded) return BadRequest<JwtResult>("Email or password is wrong.");
 
             var result = await _authenticationService.GetJWTToken(user);

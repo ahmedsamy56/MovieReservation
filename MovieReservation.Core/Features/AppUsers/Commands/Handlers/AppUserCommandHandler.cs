@@ -18,34 +18,41 @@ namespace MovieReservation.Core.Features.AppUsers.Commands.Handlers
         #region Fields
         private readonly UserManager<AppUser> _userManager;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IAppUserService _appUserService;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
-        public AppUserCommandHandler(IMapper mapper, UserManager<AppUser> userManager, ICurrentUserService currentUserService)
+        public AppUserCommandHandler(IMapper mapper, UserManager<AppUser> userManager, ICurrentUserService currentUserService, IAppUserService appUserService)
         {
             _userManager = userManager;
             _currentUserService = currentUserService;
             _mapper = mapper;
+            _appUserService = appUserService;
         }
         #endregion
 
         #region Functions
         public async Task<Response<string>> Handle(AddAppUserCommand request, CancellationToken cancellationToken)
         {
-            //if email exist 
-            var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user != null) return BadRequest<string>("Email is used");
-
             var UserMapping = _mapper.Map<AppUser>(request);
+            var createResult = await _appUserService.AddUserAsync(UserMapping, request.Password);
 
-            var result = await _userManager.CreateAsync(UserMapping, request.Password);
+            switch (createResult)
+            {
+                case "EmailIsExist":
+                    return BadRequest<string>("This email is already in use.");
 
-            if (!result.Succeeded) return BadRequest<string>($"Faild To Add User : {result.Errors.FirstOrDefault().ToString()}");
+                case "Failed":
+                    return BadRequest<string>("Registration failed. Please try again.");
 
-            await _userManager.AddToRoleAsync(UserMapping, "User");
+                case "Success":
+                    return Success<string>("");
 
-            return Created("");
+                default:
+                    return BadRequest<string>(createResult);
+            }
+
         }
 
         public async Task<Response<string>> Handle(EditAppUserCommand request, CancellationToken cancellationToken)

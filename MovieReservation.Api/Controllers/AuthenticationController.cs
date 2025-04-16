@@ -29,5 +29,12 @@ namespace MovieReservation.Api.Controllers
             return NewResult(response);
         }
 
+        [HttpGet(Router.AuthenticationRouting.ConfirmEmail)]
+        public async Task<IActionResult> ConfirmEmail([FromQuery] ConfirmEmailQuery query)
+        {
+            var response = await Mediator.Send(query);
+            return NewResult(response);
+        }
+
     }
 }
