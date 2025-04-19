@@ -14,6 +14,7 @@ namespace MovieReservation.Infrustructure
             services.AddTransient<IShowtimeRepository, ShowtimeRepository>();
             services.AddTransient<ITheaterRepository, TheaterRepository>();
             services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddTransient<IReservationRepository, ReservationRepository>();
 
             services.AddTransient(typeof(IGenericRepositoryAsync<>), typeof(GenericRepositoryAsync<>));
 
