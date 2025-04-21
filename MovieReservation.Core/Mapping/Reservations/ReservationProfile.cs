@@ -7,6 +7,7 @@ namespace MovieReservation.Core.Mapping.Reservations
         public ReservationProfile()
         {
             AddReservationCommandMapping();
+            GetReservationPaginatedListMapping();
         }
     }
 }
