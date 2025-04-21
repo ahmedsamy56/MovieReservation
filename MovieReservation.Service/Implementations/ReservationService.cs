@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MovieReservation.Data.Entities;
 using MovieReservation.Data.Entities.Identity;
+using MovieReservation.Data.Enums;
 using MovieReservation.Infrustructure.Abstracts;
 using MovieReservation.Service.Abstracts;
 
@@ -104,6 +105,34 @@ namespace MovieReservation.Service.Implementations
 
             if (reservation == null) return "Fake";
             return "valid";
+        }
+
+        public IQueryable<Reservation> FilterReservationPaginatedQuerable(ReservayionOrderingEnum orderingEnum, string search)
+        {
+            var querable = _reservationRepository.GetTableNoTracking().Include(x => x.AppUser).Include(x => x.Showtime).ThenInclude(xx => xx.Movie).AsQueryable();
+            if (search != null)
+                querable = querable.Where(x => x.AppUser.UserName.Contains(search) || x.Showtime.Movie.Title.Contains(search) || x.Showtime.Movie.Description.Contains(search));
+
+
+            switch (orderingEnum)
+            {
+                case ReservayionOrderingEnum.Id:
+                    querable = querable.OrderBy(x => x.Id);
+                    break;
+                case ReservayionOrderingEnum.CreatedAt:
+                    querable = querable.OrderBy(x => x.CreatedAt);
+                    break;
+                case ReservayionOrderingEnum.MovieNumber:
+                    querable = querable.OrderBy(x => x.Showtime.MovieId);
+                    break;
+                case ReservayionOrderingEnum.TheaterNumber:
+                    querable = querable.OrderBy(x => x.Showtime.TheaterId);
+                    break;
+                default:
+                    querable = querable.OrderBy(x => x.CreatedAt);
+                    break;
+            }
+            return querable;
         }
 
 

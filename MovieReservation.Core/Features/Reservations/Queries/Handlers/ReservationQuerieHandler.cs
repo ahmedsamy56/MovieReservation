@@ -1,28 +1,34 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Http;
 using MovieReservation.Core.Bases;
 using MovieReservation.Core.Features.Reservations.Queries.Models;
 using MovieReservation.Core.Features.Reservations.Queries.Results;
+using MovieReservation.Core.Wrappers;
 using MovieReservation.Service.Abstracts;
 
 namespace MovieReservation.Core.Features.Reservations.Queries.Handlers
 {
     public class ReservationQuerieHandler : ResponseHandler,
                                           IRequestHandler<ValidateReservationQuerie, Response<string>>,
-                                          IRequestHandler<GetMyTicketQuerie, Response<GetMyTicketResponse>>
+                                          IRequestHandler<GetMyTicketQuerie, Response<GetMyTicketResponse>>,
+                                          IRequestHandler<GetReservationPaginatedListQuery, PaginatedResult<GetReservationPaginatedListResponse>>
+
     {
         #region Fields
         private readonly IReservationService _reservationService;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IMapper _mapper;
         #endregion
 
         #region Constructors
-        public ReservationQuerieHandler(IReservationService reservationService, IHttpContextAccessor httpContextAccessor, ICurrentUserService currentUserService)
+        public ReservationQuerieHandler(IReservationService reservationService, IHttpContextAccessor httpContextAccessor, ICurrentUserService currentUserService, IMapper mapper)
         {
             _reservationService = reservationService;
             _httpContextAccessor = httpContextAccessor;
             _currentUserService = currentUserService;
+            _mapper = mapper;
         }
 
         #endregion
@@ -57,6 +63,16 @@ namespace MovieReservation.Core.Features.Reservations.Queries.Handlers
 
             return Success(ticket);
         }
+
+        public async Task<PaginatedResult<GetReservationPaginatedListResponse>> Handle(GetReservationPaginatedListQuery request, CancellationToken cancellationToken)
+        {
+            var FilterQuery = _reservationService.FilterReservationPaginatedQuerable(request.orderingEnum, request.Search);
+            var PaginatedListMapping = await _mapper.ProjectTo<GetReservationPaginatedListResponse>(FilterQuery).ToPaginatedListAsync(request.PageNumber, request.PageSize);
+            PaginatedListMapping.Meta = new { Count = PaginatedListMapping.Data.Count() };
+            return PaginatedListMapping;
+        }
+
+
 
 
         #endregion

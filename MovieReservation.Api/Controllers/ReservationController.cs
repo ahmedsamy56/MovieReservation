@@ -7,7 +7,7 @@ using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
 {
-    [Authorize]
+    //  [Authorize]
     public class ReservationController : AppControllerBase
     {
         [HttpPost(Router.ReservationRouting.Create)]
@@ -40,5 +40,13 @@ namespace MovieReservation.Api.Controllers
             var response = await Mediator.Send(new GetMyTicketQuerie(id));
             return NewResult(response);
         }
+
+        [HttpGet(Router.ReservationRouting.Paginated)]
+        public async Task<IActionResult> Paginated([FromQuery] GetReservationPaginatedListQuery query)
+        {
+            var response = await Mediator.Send(query);
+            return Ok(response);
+        }
+
     }
 }
