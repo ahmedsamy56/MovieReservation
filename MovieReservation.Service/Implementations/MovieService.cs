@@ -133,7 +133,10 @@ namespace MovieReservation.Service.Implementations
             var movie = await _movieRepository.GetByIdAsync(id);
             return movie;
         }
-
+        public async Task<int> GetMoviesCountAsync()
+        {
+            return await _movieRepository.GetTableNoTracking().CountAsync();
+        }
         #endregion
     }
 }

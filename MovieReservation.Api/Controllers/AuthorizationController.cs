@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using MovieReservation.Api.Base;
 using MovieReservation.Core.Features.Authorization.Commands.Models;
 using MovieReservation.Core.Features.Authorization.Queries.Models;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
 {
 
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = SD.AdminRole)]
     public class AuthorizationController : AppControllerBase
     {
         [HttpPost(Router.AuthorizationRouting.AddAdminRole)]

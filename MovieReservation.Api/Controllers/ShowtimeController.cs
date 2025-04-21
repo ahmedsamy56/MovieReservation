@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReservation.Api.Base;
 using MovieReservation.Core.Features.Showtimes.Commands.Models;
 using MovieReservation.Core.Features.Showtimes.Queries.Models;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
 {
     public class ShowtimeController : AppControllerBase
     {
+        [Authorize(Roles = SD.AdminRole)]
         [HttpPost(Router.ShowtimeRouting.Create)]
         public async Task<IActionResult> Create([FromBody] AddShowtimeCommand request)
         {
@@ -15,6 +18,7 @@ namespace MovieReservation.Api.Controllers
             return NewResult(response);
         }
 
+        [Authorize(Roles = SD.AdminRole)]
         [HttpPut(Router.ShowtimeRouting.Edit)]
         public async Task<IActionResult> UpdateShowtime([FromBody] EditShowtimeCommand request)
         {
@@ -36,6 +40,7 @@ namespace MovieReservation.Api.Controllers
             return NewResult(response);
         }
 
+        [Authorize(Roles = SD.AdminRole)]
         [HttpDelete(Router.ShowtimeRouting.Delete)]
         public async Task<IActionResult> Delete(int id)
         {

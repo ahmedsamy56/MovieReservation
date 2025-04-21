@@ -97,7 +97,12 @@
             public const string Prefix = Rule + "EmailsRoute";
             public const string SendEmail = Prefix + "/SendEmail";
         }
-
-
+        public static class ReportingRouting
+        {
+            public const string Prefix = Rule + "ReportingRouting";
+            public const string Overall = Prefix + "/Overall-info";
+            public const string NewUsersStats = Prefix + "/New-Users-Stats";
+            public const string ReservationStats = Prefix + "/Reservation-Stats";
+        }
     }
 }

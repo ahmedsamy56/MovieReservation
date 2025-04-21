@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReservation.Api.Base;
 using MovieReservation.Core.Features.Categories.Commands.Models;
 using MovieReservation.Core.Features.Categories.Queries.Models;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
@@ -9,7 +11,7 @@ namespace MovieReservation.Api.Controllers
     public class CategoryController : AppControllerBase
     {
 
-
+        [Authorize(Roles = SD.AdminRole)]
         [HttpPost(Router.CategoryRouting.Create)]
         public async Task<IActionResult> Create([FromBody] AddCategoryCommand request)
         {
@@ -31,6 +33,7 @@ namespace MovieReservation.Api.Controllers
 
         }
 
+        [Authorize(Roles = SD.AdminRole)]
         [HttpPut(Router.CategoryRouting.Edit)]
         public async Task<IActionResult> Update([FromBody] EditCategoryCommand request)
         {
@@ -38,8 +41,8 @@ namespace MovieReservation.Api.Controllers
             return NewResult(response);
         }
 
+        [Authorize(Roles = SD.AdminRole)]
         [HttpDelete(Router.CategoryRouting.Delete)]
-
         public async Task<IActionResult> Delete(int id)
         {
             var response = await Mediator.Send(new DeleteCategoryCommand(id));

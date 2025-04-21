@@ -13,6 +13,7 @@ namespace MovieReservation.Service.Abstracts
         public Task<bool> MovieExistAsync(int id);
         public IQueryable<Movie> FilterMoviePaginatedQuerable(MovieOrderingEnum orderingEnum, string search);
         public Task<string> DeleteMovieAsync(Movie movie);
+        public Task<int> GetMoviesCountAsync();
 
     }
 }

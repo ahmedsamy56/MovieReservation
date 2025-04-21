@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MovieReservation.Data.Entities.Identity;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Infrustructure.Context;
 using MovieReservation.Service.Abstracts;
 
@@ -27,6 +29,10 @@ namespace MovieReservation.Service.Implementations
             _applicationDBContext = applicationDBContext;
         }
         #endregion
+
+
+        #region Functions
+
         public async Task<string> AddUserAsync(AppUser user, string password)
         {
             var trans = await _applicationDBContext.Database.BeginTransactionAsync();
@@ -39,7 +45,7 @@ namespace MovieReservation.Service.Implementations
                 if (!createResult.Succeeded)
                     return string.Join(",", createResult.Errors.Select(x => x.Description).ToList());
 
-                await _userManager.AddToRoleAsync(user, "User");
+                await _userManager.AddToRoleAsync(user, SD.UserRole);
 
                 //Send Confirm  
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -58,5 +64,24 @@ namespace MovieReservation.Service.Implementations
                 return "Failed";
             }
         }
+
+
+        public async Task<int> GetUsersCountAsync(DateTime? from, DateTime? to)
+        {
+            var query = _userManager.Users.AsQueryable();
+
+            if (from.HasValue)
+            {
+                query = query.Where(u => u.CreatedAt >= from.Value);
+            }
+
+            if (to.HasValue)
+            {
+                query = query.Where(u => u.CreatedAt <= to.Value);
+            }
+
+            return await query.CountAsync();
+        }
+        #endregion
     }
 }

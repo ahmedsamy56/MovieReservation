@@ -108,7 +108,10 @@ namespace MovieReservation.Service.Implementations
 
             return isAvailable;
         }
-
+        public async Task<int> GetTheatersCountAsync()
+        {
+            return await _movieRepository.GetTableNoTracking().CountAsync();
+        }
         #endregion
     }
 }

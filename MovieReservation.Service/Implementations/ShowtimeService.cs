@@ -104,6 +104,11 @@ namespace MovieReservation.Service.Implementations
             return "Success";
         }
 
+        public async Task<int> GetShowtimesCountAsync()
+        {
+            return await _showtimeRepository.GetTableNoTracking().CountAsync();
+        }
+
         #endregion
     }
 }

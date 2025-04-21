@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MovieReservation.Api.Base;
 using MovieReservation.Core.Features.Theaters.Commands.Models;
 using MovieReservation.Core.Features.Theaters.Queries.Models;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
 {
     public class TheaterController : AppControllerBase
     {
+        [Authorize(Roles = SD.AdminRole)]
         [HttpPost(Router.TheaterRouting.Create)]
         public async Task<IActionResult> Create([FromBody] AddTheaterCommand request)
         {
@@ -15,6 +18,7 @@ namespace MovieReservation.Api.Controllers
             return NewResult(response);
         }
 
+        [Authorize(Roles = SD.AdminRole)]
         [HttpPut(Router.TheaterRouting.Edit)]
         public async Task<IActionResult> UpdateTheater([FromBody] EditTheaterCommand request)
         {
@@ -36,7 +40,7 @@ namespace MovieReservation.Api.Controllers
             return Ok(response);
         }
 
-
+        [Authorize(Roles = SD.AdminRole)]
         [HttpDelete(Router.TheaterRouting.Delete)]
         public async Task<IActionResult> Delete(int id)
         {
