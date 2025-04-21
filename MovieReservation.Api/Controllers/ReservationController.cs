@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using MovieReservation.Api.Base;
 using MovieReservation.Core.Features.Reservations.Commands.Models;
 using MovieReservation.Core.Features.Reservations.Queries.Models;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
 {
-    //  [Authorize]
+    [Authorize]
     public class ReservationController : AppControllerBase
     {
         [HttpPost(Router.ReservationRouting.Create)]
@@ -41,6 +42,7 @@ namespace MovieReservation.Api.Controllers
             return NewResult(response);
         }
 
+        [Authorize(Roles = SD.AdminRole)]
         [HttpGet(Router.ReservationRouting.Paginated)]
         public async Task<IActionResult> Paginated([FromQuery] GetReservationPaginatedListQuery query)
         {

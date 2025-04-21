@@ -14,5 +14,6 @@ namespace MovieReservation.Service.Abstracts
         public Task<string> DeleteTheaterAsync(Theater theater);
         public Task<bool> TheaterExistsAsync(int id);
         public Task<bool> IsTheaterAvailableAsync(int theaterId, DateTime startTime, int movieId);
+        public Task<int> GetTheatersCountAsync();
     }
 }

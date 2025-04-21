@@ -11,5 +11,6 @@ namespace MovieReservation.Service.Abstracts
         public Task<bool> CategoryExistAsync(int id);
         public Task<string> EditCategoryAsync(Category category);
         public Task<string> DeleteCategoryAsync(Category category);
+        public Task<int> GetCategoriesCountAsync();
     }
 }

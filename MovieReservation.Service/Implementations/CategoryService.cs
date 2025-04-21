@@ -63,6 +63,11 @@ namespace MovieReservation.Service.Implementations
             return category;
         }
 
+        public async Task<int> GetCategoriesCountAsync()
+        {
+            return await _categoryRepository.GetTableAsTracking().CountAsync();
+        }
+
 
 
 

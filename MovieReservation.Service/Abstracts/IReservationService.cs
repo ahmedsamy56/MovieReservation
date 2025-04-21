@@ -1,5 +1,6 @@
 ﻿using MovieReservation.Data.Entities;
 using MovieReservation.Data.Enums;
+using MovieReservation.Data.Helpers;
 
 namespace MovieReservation.Service.Abstracts
 {
@@ -11,6 +12,9 @@ namespace MovieReservation.Service.Abstracts
         public Task<string> DeleteReservationAsync(int reservationId);
         public Task<string> ValidateReservationAsync(string code);
         public IQueryable<Reservation> FilterReservationPaginatedQuerable(ReservayionOrderingEnum orderingEnum, string search);
+        public Task<int> GetReservationsCountAsync();
+        Task<ReservationStatsResponse> GetReservationStatsAsync(DateTime? from, DateTime? to);
+
 
     }
 }

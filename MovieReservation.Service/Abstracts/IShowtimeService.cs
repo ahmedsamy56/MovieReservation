@@ -12,6 +12,7 @@ namespace MovieReservation.Service.Abstracts
         public Task<Showtime> GetShowtimeByIdWithIncludeAsync(int id);
         public Task<bool> HasReservationsAsync(int showtimeId);
         public Task<string> DeleteShowtimeAsync(Showtime showtime);
+        public Task<int> GetShowtimesCountAsync();
 
     }
 }

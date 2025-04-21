@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieReservation.Data.Entities;
 using MovieReservation.Data.Entities.Identity;
 using MovieReservation.Data.Enums;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Infrustructure.Abstracts;
 using MovieReservation.Service.Abstracts;
 
@@ -133,6 +134,29 @@ namespace MovieReservation.Service.Implementations
                     break;
             }
             return querable;
+        }
+
+        public async Task<int> GetReservationsCountAsync()
+        {
+            return await _reservationRepository.GetTableNoTracking().CountAsync();
+        }
+
+        public async Task<ReservationStatsResponse> GetReservationStatsAsync(DateTime? from, DateTime? to)
+        {
+            var query = _reservationRepository.GetTableNoTracking().Include(x => x.Showtime).AsQueryable();
+            if (from.HasValue)
+                query = query.Where(r => r.CreatedAt >= from.Value);
+
+            if (to.HasValue)
+                query = query.Where(r => r.CreatedAt <= to.Value);
+
+            var reservations = await query.ToListAsync();
+
+            return new ReservationStatsResponse
+            {
+                ReservationCount = reservations.Count,
+                TotalProfit = reservations.Sum(r => r.Showtime?.Price ?? 0)
+            };
         }
 
 

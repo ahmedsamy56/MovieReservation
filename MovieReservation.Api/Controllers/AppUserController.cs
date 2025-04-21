@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MovieReservation.Api.Base;
 using MovieReservation.Core.Features.AppUsers.Commands.Models;
 using MovieReservation.Core.Features.AppUsers.Queries.Models;
+using MovieReservation.Data.Helpers;
 using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
@@ -18,6 +19,7 @@ namespace MovieReservation.Api.Controllers
             return NewResult(response);
         }
 
+        [Authorize(Roles = SD.AdminRole)]
         [HttpGet(Router.AppUserRouting.Paginated)]
         public async Task<IActionResult> Paginated([FromQuery] GetAppUserPaginationQuery query)
         {
