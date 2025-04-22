@@ -65,7 +65,7 @@ A backend API system built with **ASP.NET Core** using **Clean Architecture** to
 
 ---
 
-## 📦 API Endpoints (Examples)
+## 📦 API Endpoints 
 
 ### AppUser
 ![AppUser EndPoints](assets/AppUser.png)
