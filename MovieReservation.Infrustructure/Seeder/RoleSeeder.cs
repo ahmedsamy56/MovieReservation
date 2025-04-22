@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MovieReservation.Data.Entities.Identity;
+using MovieReservation.Data.Helpers;
 
 namespace MovieReservation.Infrustructure.Seeder
 {
@@ -14,11 +15,11 @@ namespace MovieReservation.Infrustructure.Seeder
 
                 await _roleManager.CreateAsync(new Role()
                 {
-                    Name = "Admin"
+                    Name = SD.AdminRole
                 });
                 await _roleManager.CreateAsync(new Role()
                 {
-                    Name = "User"
+                    Name = SD.UserRole
                 });
             }
         }

@@ -66,11 +66,6 @@ namespace MovieReservation.Service.Implementations
                 else
                     return "NoImage";
             }
-            else
-            {
-
-
-            }
 
             try
             {

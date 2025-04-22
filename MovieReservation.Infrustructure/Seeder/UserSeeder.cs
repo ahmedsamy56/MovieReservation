@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MovieReservation.Data.Entities.Identity;
+using MovieReservation.Data.Helpers;
 
 namespace MovieReservation.Infrustructure.Seeder
 {
@@ -22,7 +23,7 @@ namespace MovieReservation.Infrustructure.Seeder
                     PhoneNumberConfirmed = true
                 };
                 await _userManager.CreateAsync(defaultuser, "Admin@123");
-                await _userManager.AddToRoleAsync(defaultuser, "Admin");
+                await _userManager.AddToRoleAsync(defaultuser, SD.AdminRole);
             }
         }
     }

@@ -17,6 +17,7 @@ namespace MovieReservation.Service.Implementations
         private readonly IEmailsService _emailsService;
         private readonly AppDbContext _applicationDBContext;
         #endregion
+
         #region Constructors
         public AppUserService(UserManager<AppUser> userManager,
                                       IHttpContextAccessor httpContextAccessor,
@@ -32,7 +33,6 @@ namespace MovieReservation.Service.Implementations
 
 
         #region Functions
-
         public async Task<string> AddUserAsync(AppUser user, string password)
         {
             var trans = await _applicationDBContext.Database.BeginTransactionAsync();

@@ -2,6 +2,7 @@
 using MovieReservation.Core.Bases;
 using MovieReservation.Core.Features.Authentication.Queries.Models;
 using MovieReservation.Service.Abstracts;
+using Serilog;
 
 namespace MovieReservation.Core.Features.Authentication.Queries.Handles
 {
@@ -38,9 +39,13 @@ namespace MovieReservation.Core.Features.Authentication.Queries.Handles
             var confirmEmail = await _authenticationService.ConfirmEmail(request.UserId, request.Code);
 
             if (confirmEmail == "ErrorWhenConfirmEmail")
+            {
+                Log.Warning("Email confirmation failed for UserId: {UserId}, Code: {Code}", request.UserId, request.Code);
                 return BadRequest<string>("An error occurred while confirming the email.");
+            }
 
-            return Success<string>("Email confirmed successfully.");
+            Log.Information("Email confirmed successfully for UserId: {UserId}", request.UserId);
+            return Success("Email confirmed successfully.");
 
         }
 

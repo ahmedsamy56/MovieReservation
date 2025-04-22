@@ -2,6 +2,7 @@
 using MovieReservation.Core.Bases;
 using MovieReservation.Core.Features.Authorization.Commands.Models;
 using MovieReservation.Service.Abstracts;
+using Serilog;
 
 namespace MovieReservation.Core.Features.Authorization.Commands.Handlers
 {
@@ -32,8 +33,12 @@ namespace MovieReservation.Core.Features.Authorization.Commands.Handlers
             var resultMessage = await _authorizationService.AddAdminRole(request.UserId);
 
             if (resultMessage == "User added to Admin role.")
+            {
+                Log.Information("User promoted to Admin role. UserId: {UserId}", request.UserId);
                 return Success(resultMessage);
+            }
 
+            Log.Warning("Failed to add Admin role. UserId: {UserId}, Reason: {Reason}", request.UserId, resultMessage);
             return BadRequest<string>(resultMessage);
         }
 
@@ -42,8 +47,12 @@ namespace MovieReservation.Core.Features.Authorization.Commands.Handlers
             var resultMessage = await _authorizationService.RemoveAdminRole(request.UserId);
 
             if (resultMessage == "User removed from Admin role.")
+            {
+                Log.Information("Admin role removed from user. UserId: {UserId}", request.UserId);
                 return Success(resultMessage);
+            }
 
+            Log.Warning("Failed to remove Admin role. UserId: {UserId}, Reason: {Reason}", request.UserId, resultMessage);
             return BadRequest<string>(resultMessage);
 
         }

@@ -1,9 +1,10 @@
-﻿using FluentValidation;
+﻿using System.Net;
+using System.Text.Json;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MovieReservation.Core.Bases;
-using System.Net;
-using System.Text.Json;
+using Serilog;
 
 namespace MovieReservation.Core.MiddleWare
 {
@@ -27,6 +28,7 @@ namespace MovieReservation.Core.MiddleWare
                 var response = context.Response;
                 response.ContentType = "application/json";
                 var responseModel = new Response<string>() { Succeeded = false, Message = error?.Message };
+                Log.Error(error, error.Message, context.Request, "");
 
                 //TODO:: cover all validation errors
                 switch (error)
