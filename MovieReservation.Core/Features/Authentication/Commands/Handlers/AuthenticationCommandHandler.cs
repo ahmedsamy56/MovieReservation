@@ -5,6 +5,7 @@ using MovieReservation.Core.Features.Authentication.Commands.Models;
 using MovieReservation.Data.Entities.Identity;
 using MovieReservation.Data.Helpers;
 using MovieReservation.Service.Abstracts;
+using Serilog;
 
 namespace MovieReservation.Core.Features.Authentication.Commands.Handlers
 {
@@ -33,17 +34,29 @@ namespace MovieReservation.Core.Features.Authentication.Commands.Handlers
         public async Task<Response<JwtResult>> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null) return BadRequest<JwtResult>("Email or password is wrong.");
+            if (user == null)
+            {
+                Log.Warning("Login failed: user not found for email {Email}", request.Email);
+                return BadRequest<JwtResult>("Email or password is wrong.");
+            }
 
 
             var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 
             if (!user.EmailConfirmed)
+            {
+                Log.Warning("Login attempt with unconfirmed email: {Email}", request.Email);
                 return BadRequest<JwtResult>("Email not Confirmed");
+            }
 
-            if (!signInResult.Succeeded) return BadRequest<JwtResult>("Email or password is wrong.");
+            if (!signInResult.Succeeded)
+            {
+                Log.Warning("Login failed: incorrect password for user {Email}", request.Email);
+                return BadRequest<JwtResult>("Email or password is wrong.");
+            }
 
             var result = await _authenticationService.GetJWTToken(user);
+            Log.Information("User logged in successfully: {Email}, UserId: {UserId}", user.Email, user.Id);
             return Success(result);
         }
 

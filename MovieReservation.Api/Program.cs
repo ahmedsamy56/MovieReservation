@@ -9,6 +9,8 @@ using MovieReservation.Infrustructure;
 using MovieReservation.Infrustructure.Context;
 using MovieReservation.Infrustructure.Seeder;
 using MovieReservation.Service;
+using Serilog;
+
 
 namespace MovieReservation.Api
 {
@@ -48,6 +50,10 @@ namespace MovieReservation.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //Serilog
+            Log.Logger = new LoggerConfiguration()
+                          .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+            builder.Services.AddSerilog();
 
 
             var app = builder.Build();
