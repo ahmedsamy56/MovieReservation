@@ -1,6 +1,6 @@
 ﻿using MovieReservation.Data.Entities;
 using MovieReservation.Data.Enums;
-using MovieReservation.Data.Helpers;
+using MovieReservation.Data.Results;
 
 namespace MovieReservation.Service.Abstracts
 {

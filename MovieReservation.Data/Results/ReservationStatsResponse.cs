@@ -1,4 +1,4 @@
-﻿namespace MovieReservation.Data.Helpers
+﻿namespace MovieReservation.Data.Results
 {
     public class ReservationStatsResponse
     {

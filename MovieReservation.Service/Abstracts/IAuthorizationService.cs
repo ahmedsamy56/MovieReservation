@@ -1,4 +1,5 @@
 ﻿using MovieReservation.Data.Entities.Identity;
+using MovieReservation.Data.Results;
 
 namespace MovieReservation.Service.Abstracts
 {
@@ -8,6 +9,8 @@ namespace MovieReservation.Service.Abstracts
         public Task<string> RemoveAdminRole(int Id);
 
         public Task<List<AppUser>> GetAllAdminsAsync();
+        Task<GetUserRoleRespons> GetUserRolesAsync(AppUser user);
+
 
     }
 }

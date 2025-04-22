@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MovieReservation.Data.Entities;
 using MovieReservation.Data.Entities.Identity;
 using MovieReservation.Data.Enums;
-using MovieReservation.Data.Helpers;
+using MovieReservation.Data.Results;
 using MovieReservation.Infrustructure.Abstracts;
 using MovieReservation.Service.Abstracts;
 

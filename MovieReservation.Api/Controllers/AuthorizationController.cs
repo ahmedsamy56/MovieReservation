@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MovieReservation.Api.Base;
 using MovieReservation.Core.Features.Authorization.Commands.Models;
 using MovieReservation.Core.Features.Authorization.Queries.Models;
-using MovieReservation.Data.Helpers;
 using MovieReservation.Data.Routing;
 
 namespace MovieReservation.Api.Controllers
 {
 
     [ApiController]
-    [Authorize(Roles = SD.AdminRole)]
+    //[Authorize(Roles = SD.AdminRole)]
     public class AuthorizationController : AppControllerBase
     {
         [HttpPost(Router.AuthorizationRouting.AddAdminRole)]
@@ -32,6 +30,13 @@ namespace MovieReservation.Api.Controllers
         {
             var response = await Mediator.Send(new GetAllAdminsQuery());
             return Ok(response);
+        }
+
+        [HttpGet(Router.AuthorizationRouting.UserRole)]
+        public async Task<IActionResult> GetUserRole(int Id)
+        {
+            var response = await Mediator.Send(new GetUserRoleQuery(Id));
+            return NewResult(response);
         }
 
 

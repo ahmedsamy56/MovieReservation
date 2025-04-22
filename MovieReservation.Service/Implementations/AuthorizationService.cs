@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MovieReservation.Data.Entities.Identity;
 using MovieReservation.Data.Helpers;
+using MovieReservation.Data.Results;
 using MovieReservation.Service.Abstracts;
 
 namespace MovieReservation.Service.Implementations
@@ -10,12 +11,14 @@ namespace MovieReservation.Service.Implementations
     {
         #region Fields
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         #endregion
 
         #region Constructors
-        public AuthorizationService(UserManager<AppUser> userManager)
+        public AuthorizationService(UserManager<AppUser> userManager, RoleManager<Role> roleManager)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
         }
 
 
@@ -64,6 +67,34 @@ namespace MovieReservation.Service.Implementations
             }
 
             return admins;
+        }
+
+        public async Task<GetUserRoleRespons> GetUserRolesAsync(AppUser user)
+        {
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var userRolesList = new List<UserRoles>();
+
+            foreach (var roleName in roles)
+            {
+                var role = await _roleManager.FindByNameAsync(roleName);
+                if (role != null)
+                {
+                    userRolesList.Add(new UserRoles
+                    {
+                        Id = role.Id,
+                        Name = role.Name
+                    });
+                }
+            }
+
+            var response = new GetUserRoleRespons
+            {
+                UserId = user.Id,
+                userRoles = userRolesList
+            };
+
+            return response;
         }
 
         #endregion
