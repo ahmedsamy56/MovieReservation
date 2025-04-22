@@ -89,6 +89,7 @@
             public const string AddAdminRole = Prefix + "/Add-User-To-Admin-Role";
             public const string RemoveAdminRole = Prefix + "/Remove-User-From-Admin-Role";
             public const string AllAdmins = Prefix + "/All-Admins";
+            public const string UserRole = Prefix + "/Get-User-Role/{Id}";
 
         }
 

@@ -2,7 +2,7 @@
 using MovieReservation.Core.Bases;
 using MovieReservation.Core.Features.Reporting.Queries.Models;
 using MovieReservation.Core.Features.Reporting.Queries.Results;
-using MovieReservation.Data.Helpers;
+using MovieReservation.Data.Results;
 using MovieReservation.Service.Abstracts;
 
 namespace MovieReservation.Core.Features.Reporting.Queries.Handlers
